@@ -14,10 +14,27 @@ Stat *
 file_1_svc(Input_file *argp, struct svc_req *rqstp)
 {
 	static Stat  result;
+    char c, prec = EOF;
 
-	/*
-	 * insert server code here
-	 */
+    result.chars = 0;
+    result.words = 0;
+    result.row = 0;
+
+    fp = fopen(argp->file, "rt");
+
+	if (fp != NULL) { // Apertura ok
+		while ((c = fgetc(fp)) != EOF) {
+            result.chars += 1;
+            if(c == '\n') result.rows += 1;
+            if(c == ' ' && prec != '\n' && prec != ' ') result.words += 1;
+            prec = c;
+		}
+		fclose(fp);
+	} else {
+        result.chars = -1;
+        result.words = -1;
+        result.rows = -1;
+    }
 
 	return &result;
 }
