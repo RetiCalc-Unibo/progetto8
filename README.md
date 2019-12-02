@@ -4,6 +4,10 @@ Esercitazione in C: XDR, RPC, comunicazione remota Server Client
 # PDF
 <a href="http://lia.disi.unibo.it/Courses/RetiT/materiale/esercitazioni/es8/svolta8.pdf">Svolto</a> <a href="http://lia.disi.unibo.it/Courses/RetiT/materiale/esercitazioni/es8/proposta8.pdf">Proposta</a>
 
+# Da fare
+- Implementare i metodi file e dir in scan_proc.c
+- Creare la logica Client e Server in scan_clnt.c e scan_server.c
+
 # NOTE
 I file: scan_clnt.c, scan_svc.c, scan_xdr.c, scan.h 
 sono generati automaticamente attraverso il comando "rpcgen -a scan.x" e NON vanno modificati direttamente.
