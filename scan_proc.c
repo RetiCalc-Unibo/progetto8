@@ -9,16 +9,19 @@
 #include <sys/types.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdio.h>
+#include <dirent.h>
 
 Stat *
-file_1_svc(Input_file *argp, struct svc_req *rqstp)
+file_scan_1_svc(Input_file *argp, struct svc_req *rqstp)
 {
 	static Stat  result;
+    FILE *fp;
     char c, prec = EOF;
 
     result.chars = 0;
     result.words = 0;
-    result.row = 0;
+    result.rows = 0;
 
     fp = fopen(argp->file, "rt");
 
@@ -40,10 +43,11 @@ file_1_svc(Input_file *argp, struct svc_req *rqstp)
 }
 
 int *
-dir_1_svc(Input_dir *argp, struct svc_req *rqstp)
+dir_scan_1_svc(Input_dir *argp, struct svc_req *rqstp)
 {
 	static int  result;
 
+    DIR *dir;
     int fd;
     struct stat path_stat;
     result = 0;

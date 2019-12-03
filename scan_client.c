@@ -29,8 +29,8 @@ scanprog_1(char *host)
 	while(gets(input)) {
 		if(input[0] == 'f'){
 			printf("Inserisci il nome di un file remoto: ");
-			gets(file_1_arg.file);
-			result_1 = file_1(&file_1_arg, clnt);
+			gets(file_1_arg.fileName);
+			result_1 = file_scan_1(&file_1_arg, clnt);
 			if (result_1 == (Stat *) NULL) {
 				clnt_perror (clnt, "call failed");
 			}
@@ -39,23 +39,23 @@ scanprog_1(char *host)
 				printf("Errore di lettura del file.\n");
 			} else {
 				printf("File %s:\n\tcaratteri:%d\n\tparole:%d\n\trighe:%d\n",
-					file_1_arg.file, result_1->chars, result_1->words, result_1->rows);
+					file_1_arg.fileName, result_1->chars, result_1->words, result_1->rows);
 			}
 		} else if(input[0] == 'd'){
 			printf("Inserisci il nome di una directory remota: ");
-			gets(dir_1_arg.directory);
+			gets(dir_1_arg.dirName);
 			printf("Inserisci un intero (num. di byte minimi): ");
 			scanf("%d", &(dir_1_arg.threshold));
-			result_2 = dir_1(&dir_1_arg, clnt);
+			result_2 = dir_scan_1(&dir_1_arg, clnt);
 			if (result_2 == (int *) NULL) {
 				clnt_perror (clnt, "call failed");
 			}
 
-			if(result_2 == -1) {
+			if(*result_2 == -1) {
 				printf("Errore di lettura della directory.\n");
 			} else {
 				printf("Directory %s:\n\tFile con dimensione>%d: %d",
-					dir_1_arg.directory, dir_1_arg.threshold, *result_2);
+					dir_1_arg.dirName, dir_1_arg.threshold, *result_2);
 			}
 		}
 

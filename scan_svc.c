@@ -20,8 +20,8 @@ static void
 scanprog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
-		Input_file file_1_arg;
-		Input_dir dir_1_arg;
+		Input_file file_scan_1_arg;
+		Input_dir dir_scan_1_arg;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -32,16 +32,16 @@ scanprog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		(void) svc_sendreply (transp, (xdrproc_t) xdr_void, (char *)NULL);
 		return;
 
-	case FILE:
+	case FILE_SCAN:
 		_xdr_argument = (xdrproc_t) xdr_Input_file;
 		_xdr_result = (xdrproc_t) xdr_Stat;
-		local = (char *(*)(char *, struct svc_req *)) file_1_svc;
+		local = (char *(*)(char *, struct svc_req *)) file_scan_1_svc;
 		break;
 
-	case DIR:
+	case DIR_SCAN:
 		_xdr_argument = (xdrproc_t) xdr_Input_dir;
 		_xdr_result = (xdrproc_t) xdr_int;
-		local = (char *(*)(char *, struct svc_req *)) dir_1_svc;
+		local = (char *(*)(char *, struct svc_req *)) dir_scan_1_svc;
 		break;
 
 	default:

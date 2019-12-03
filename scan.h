@@ -7,6 +7,7 @@
 #define _SCAN_H_RPCGEN
 
 #include <rpc/rpc.h>
+#include <rpc/clnt.h>
 
 
 #ifdef __cplusplus
@@ -15,12 +16,12 @@ extern "C" {
 
 
 struct Input_file {
-	char *file;
+	char *fileName;
 };
 typedef struct Input_file Input_file;
 
 struct Input_dir {
-	char *directory;
+	char *dirName;
 	int threshold;
 };
 typedef struct Input_dir Input_dir;
@@ -36,21 +37,21 @@ typedef struct Stat Stat;
 #define SCANVERS 1
 
 #if defined(__STDC__) || defined(__cplusplus)
-#define FILE 1
-extern  Stat * file_1(Input_file *, CLIENT *);
-extern  Stat * file_1_svc(Input_file *, struct svc_req *);
-#define DIR 2
-extern  int * dir_1(Input_dir *, CLIENT *);
-extern  int * dir_1_svc(Input_dir *, struct svc_req *);
+#define FILE_SCAN 1
+extern  Stat * file_scan_1(Input_file *, CLIENT *);
+extern  Stat * file_scan_1_svc(Input_file *, struct svc_req *);
+#define DIR_SCAN 2
+extern  int * dir_scan_1(Input_dir *, CLIENT *);
+extern  int * dir_scan_1_svc(Input_dir *, struct svc_req *);
 extern int scanprog_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
-#define FILE 1
-extern  Stat * file_1();
-extern  Stat * file_1_svc();
-#define DIR 2
-extern  int * dir_1();
-extern  int * dir_1_svc();
+#define FILE_SCAN 1
+extern  Stat * file_scan_1();
+extern  Stat * file_scan_1_svc();
+#define DIR_SCAN 2
+extern  int * dir_scan_1();
+extern  int * dir_scan_1_svc();
 extern int scanprog_1_freeresult ();
 #endif /* K&R C */
 

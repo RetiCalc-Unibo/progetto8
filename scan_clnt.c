@@ -10,12 +10,12 @@
 static struct timeval TIMEOUT = { 25, 0 };
 
 Stat *
-file_1(Input_file *argp, CLIENT *clnt)
+file_scan_1(Input_file *argp, CLIENT *clnt)
 {
 	static Stat clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
-	if (clnt_call (clnt, FILE,
+	if (clnt_call (clnt, FILE_SCAN,
 		(xdrproc_t) xdr_Input_file, (caddr_t) argp,
 		(xdrproc_t) xdr_Stat, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
@@ -25,12 +25,12 @@ file_1(Input_file *argp, CLIENT *clnt)
 }
 
 int *
-dir_1(Input_dir *argp, CLIENT *clnt)
+dir_scan_1(Input_dir *argp, CLIENT *clnt)
 {
 	static int clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
-	if (clnt_call (clnt, DIR,
+	if (clnt_call (clnt, DIR_SCAN,
 		(xdrproc_t) xdr_Input_dir, (caddr_t) argp,
 		(xdrproc_t) xdr_int, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {

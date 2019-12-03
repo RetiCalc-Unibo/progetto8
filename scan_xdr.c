@@ -10,7 +10,7 @@ xdr_Input_file (XDR *xdrs, Input_file *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_string (xdrs, &objp->file, 50))
+	 if (!xdr_string (xdrs, &objp->fileName, 50))
 		 return FALSE;
 	return TRUE;
 }
@@ -20,7 +20,7 @@ xdr_Input_dir (XDR *xdrs, Input_dir *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_string (xdrs, &objp->directory, 50))
+	 if (!xdr_string (xdrs, &objp->dirName, 50))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->threshold))
 		 return FALSE;

@@ -9,11 +9,11 @@
  */
 
 struct Input_file{
-    string file <50>;
+    string fileName <50>;
 };
 
 struct Input_dir{
-    string directory <50>;
+    string dirName <50>;
     int threshold;
 };
 
@@ -25,8 +25,8 @@ struct Stat{
 
 program SCANPROG {
 	version SCANVERS {
-		Stat FILE(Input_file) = 1;
-		int DIR(Input_dir) = 2;
+		Stat FILE_SCAN(Input_file) = 1;
+		int DIR_SCAN(Input_dir) = 2;
 	} = 1;
 } = 0x20000013;
 
