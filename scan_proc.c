@@ -23,7 +23,7 @@ file_scan_1_svc(Input_file *argp, struct svc_req *rqstp)
     result.words = 0;
     result.rows = 0;
 
-    fp = fopen(argp->file, "rt");
+    fp = fopen(argp->fileName, "rt");
 
 	if (fp != NULL) { // Apertura ok
 		while ((c = fgetc(fp)) != EOF) {
@@ -48,13 +48,18 @@ dir_scan_1_svc(Input_dir *argp, struct svc_req *rqstp)
 	static int  result;
 
     DIR *dir;
+    struct dirent * ent;
     int fd;
     struct stat path_stat;
+    char absFileName[256];
     result = 0;
 
-	if((dir = opendir(argp->directory)) != NULL){
+	if((dir = opendir(argp->dirName)) != NULL){
 		while((ent = readdir(dir)) != NULL){
-		    if(ent->d_name[0] == '.'){
+			strcpy(absFileName, argp->dirName);
+			strcat(absFileName, "/");
+			strcat(absFileName, ent->d_name);		    
+			if(ent->d_name[0] == '.'){
 				if(ent->d_name[1] == '.')
 					if(ent->d_name[2] == '\0'){
 						continue;
@@ -65,19 +70,24 @@ dir_scan_1_svc(Input_dir *argp, struct svc_req *rqstp)
 			}
 
 			stat(ent->d_name, &path_stat);
+		    	//printf("%s, ISREG:%d\n", absFileName, S_ISREG(path_stat.st_mode));
             if(S_ISREG(path_stat.st_mode) == 0) {
-                fd = open(ent->d_name, O_RDONLY);
+                fd = open(absFileName, O_RDONLY);
+     		//printf("fd: %d\n", fd);
                 if(fd != -1) {
-                    if(lseek(fd, 0, SEEK_END) > argp->threshold)
+		    //printf("%s: %d bytes\n", ent->d_name, lseek(fd,0,SEEK_END));
+		    lseek(fd,0,SEEK_SET);
+                    if(lseek(fd, 0, SEEK_END) > (argp->threshold))
                         result++;
                     close(fd);
                 }
             }
 		}
 	    closedir(dir);
-        printf("files (dim>%db): %d\n", argp->threshold, result);
+        //printf("files (dim>%db): %d\n", argp->threshold, result);
 	} else {
 		perror("diropen");
+		result = -1;
 	}
 
 	return &result;

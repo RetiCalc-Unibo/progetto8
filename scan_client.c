@@ -5,7 +5,7 @@
  */
 
 #include "scan.h"
-
+#define DIM 50
 
 void
 scanprog_1(char *host)
@@ -16,6 +16,9 @@ scanprog_1(char *host)
 	int  *result_2;
 	Input_dir  dir_1_arg;
 	char input[256];
+
+	file_1_arg.fileName = (char*) malloc(DIM);
+	dir_1_arg.dirName = (char*) malloc(DIM);
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, SCANPROG, SCANVERS, "udp");
@@ -46,6 +49,7 @@ scanprog_1(char *host)
 			gets(dir_1_arg.dirName);
 			printf("Inserisci un intero (num. di byte minimi): ");
 			scanf("%d", &(dir_1_arg.threshold));
+			getchar();
 			result_2 = dir_scan_1(&dir_1_arg, clnt);
 			if (result_2 == (int *) NULL) {
 				clnt_perror (clnt, "call failed");
@@ -54,7 +58,7 @@ scanprog_1(char *host)
 			if(*result_2 == -1) {
 				printf("Errore di lettura della directory.\n");
 			} else {
-				printf("Directory %s:\n\tFile con dimensione>%d: %d",
+				printf("Directory %s:\n\tFile con dimensione>%d: %d\n",
 					dir_1_arg.dirName, dir_1_arg.threshold, *result_2);
 			}
 		}
